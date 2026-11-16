@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         prefs = new Prefs(this);
         getWindow().setStatusBarColor(BG);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR); // 밝은 배경 → 어두운 아이콘
 
         ScrollView scroll = new ScrollView(this);
         scroll.setBackgroundColor(BG);

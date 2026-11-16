@@ -433,6 +433,7 @@ public class CaptureService extends Service implements OverlayController.Listene
         search.stop();
         overlay.clearMarks();
         overlay.setLines("");
+        overlay.setPanelVisible(false); // 패널이 판을 가리지 않게
         // 표시가 사라진 화면이 캡처될 때까지 잠깐 기다렸다가 판을 자동으로 찾는다
         cap.postDelayed(() -> {
             float[] found = held != null ? BoardLocator.locate(new ImagePixels(held)) : null;

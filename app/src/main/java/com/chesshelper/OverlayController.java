@@ -401,6 +401,10 @@ final class OverlayController {
         wm.addView(panel, panelLp);
     }
 
+    void setPanelVisible(boolean visible) {
+        if (panel != null) panel.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
     // ---------------------------------------------------------------- 판 맞추기
 
     boolean isCalibrating() {
