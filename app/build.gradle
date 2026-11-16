@@ -1,0 +1,57 @@
+plugins {
+    id 'com.android.application'
+}
+
+// 릴리스 서명 키: GitHub 저장소 Secrets에 키스토어를 넣어 두면 그것으로 서명 (업데이트 설치 가능),
+// 없으면 디버그 키로 서명 (설치는 되지만, 빌드 환경이 바뀌면 기존 앱을 지우고 다시 설치해야 할 수 있음)
+def releaseKeystore = System.getenv("SIGNING_KEYSTORE_PATH")
+
+android {
+    namespace 'com.chesshelper'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.chesshelper"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        if (releaseKeystore) {
+            release {
+                storeFile file(releaseKeystore)
+                storePassword System.getenv("SIGNING_STORE_PASSWORD")
+                keyAlias System.getenv("SIGNING_KEY_ALIAS")
+                keyPassword System.getenv("SIGNING_KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig releaseKeystore ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+    }
+
+    testOptions {
+        unitTests.all {
+            maxHeapSize = "1g"
+        }
+    }
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13.2'
+}
